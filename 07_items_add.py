@@ -5,11 +5,11 @@ def input_dictionary():
     ch = ""
     dictionary = dict()
     while ch != "n":
-        Cid = input("Enter customer ID: ")
-        name = input("Enter customer name: ")
-        city = input("Enter city: ")
+        Cid = input("Enter item ID: ")
+        name = input("Enter gift name: ")
+        cost = int(input("Enter cost: "))
 
-        dictionary[Cid] = [name, city]
+        dictionary[Cid] = [name, cost]
 
         ch = input("Would you like to add another? (y/n) ")
 
@@ -17,12 +17,12 @@ def input_dictionary():
 
 
 def create():
-    with open("06.dat", "wb") as file:
+    with open("07.dat", "wb") as file:
         pickle.dump(input_dictionary(), file)
 
 
 def read():
-    with open("06.dat", "rb") as file:
+    with open("07.dat", "rb") as file:
         d = pickle.load(file)
         print(d)
 
