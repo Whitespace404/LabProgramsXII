@@ -1,50 +1,101 @@
 import mysql.connector
 
-# Connect to the MySQL database
 mydb = mysql.connector.connect(
-    host="localhost", user="", password="tiger", database="mydatabase"
+    host="localhost",
+    user="root",
+    passwd="root",
+    database="power",
 )
+cursor = mydb.cursor()
 
-mycursor = mydb.cursor()
 
-# Create the employee table
-sql = "CREATE TABLE employee (Eid INT AUTO_INCREMENT PRIMARY KEY, Ename VARCHAR(255), Salary INT)"
-mycursor.execute(sql)
+def create():
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS employees (Eid INT PRIMARY KEY, Ename VARCHAR(255), Salary INT)"
+    )
+    mydb.commit()
+    print("Success.")
 
-# Insert a record into the employee table
-sql = "INSERT INTO employee (Ename, Salary) VALUES (%s, %s)"
-val = ("John Doe", 10000)
-mycursor.execute(sql, val)
 
-# Update a record in the employee table
-sql = "UPDATE employee SET Ename = %s WHERE Eid = %s"
-val = ("Jane Smith", 2)
-mycursor.execute(sql, val)
+def add():
+    eid = int(input("Enter employee ID: "))
+    ename = input("Enter employee name: ")
+    salary = int(input("Enter employee salary: "))
 
-# Delete a record from the employee table
-sql = "DELETE FROM employee WHERE Eid = %s"
-val = (3,)
-mycursor.execute(sql, val)
+    cursor.execute(
+        f'INSERT INTO employees (Eid, Ename, Salary) VALUES ({eid}, "{ename}", {salary})'
+    )
+    mydb.commit()
+    print("Sucess")
 
-# Search for a record in the employee table
-sql = "SELECT * FROM employee WHERE Eid = %s"
-val = (1,)
-mycursor.execute(sql, val)
 
-myresult = mycursor.fetchone()
+def update():
+    eid = input("Enter the ID you want to update: ")
+    ch = input("Would you like to change the salary (S) or the name (N)? ")
 
-for x in myresult:
-    print(x)
+    if ch == "S":
+        sal = input("Enter new salary: ")
+        cursor.execute(
+            "UPDATE employees SET Salary = {} WHERE Eid = {}".format(sal, eid)
+        )
+        mydb.commit()
+        print("Sucess")
 
-# Display all records from the employee table
-sql = "SELECT * FROM employee"
-mycursor.execute(sql)
+    elif ch == "N":
+        name = input("Enter new name: ")
+        cursor.execute(
+            "UPDATE employees SET Ename = '{}' WHERE Eid = {}".format(name, eid)
+        )
+        mydb.commit()
+        print("Sucess")
 
-myresult = mycursor.fetchall()
 
-for x in myresult:
-    print(x)
+def delete():
+    eid = input("Enter the ID you want to delete: ")
+    cursor.execute("DELETE FROM employees WHERE Eid = {}".format(eid))
+    mydb.commit()
+    print("Sucess")
 
-mydb.commit()
-mycursor.close()
+    pass
+
+
+def search():
+    eid = int(input("Enter the ID you want to search: "))
+    cursor.execute("SELECT * FROM employees WHERE Eid = {}".format(eid))
+    result = cursor.fetchone()
+    print("Employee id:", result[0])
+    print("Employee name:", result[1])
+    print("Employee salary:", result[2])
+
+
+def menu_driver():
+    choice = 0
+    while choice != 6:
+        print(
+            """
+1: Create employee table
+2: Add a record
+3: Update record
+4: Delete record
+5: Search
+6: Exit
+    """
+        )
+        choice = int(input("> "))
+
+        if choice == 1:
+            create()
+        elif choice == 2:
+            add()
+        elif choice == 3:
+            update()
+        elif choice == 4:
+            delete()
+        elif choice == 5:
+            search()
+
+
+menu_driver()
+
+cursor.close()
 mydb.close()
