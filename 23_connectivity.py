@@ -1,6 +1,6 @@
 import mysql.connector as mysql
 
-db = mysql.connect(host="localhost", user="root", password="root")
+db = mysql.connect(host="localhost", user="root", password="root" # tiger)
 cursor = db.cursor()
 
 cursor.execute("CREATE DATABASE IF NOT EXISTS school")

@@ -1,4 +1,4 @@
-# Python program to Reverse the content in the text file line by line
+# Python program to reverse the content in the text file line by line
 
 with open("1.txt", "r") as f:
     lines = []

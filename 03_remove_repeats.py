@@ -12,7 +12,11 @@ def remove_repeats():
     with open("3.txt", "r") as f:
         print(f.read() + "\n")
         f.seek(0)
-        unique_lines = set(f.readlines())
+        unique_lines = []
+        for line in f.readlines():
+            if line not in unique_lines:
+                unique_lines.append(line)
+
     with open("3.txt", "w") as f:
         f.writelines(unique_lines)
     with open("3.txt", "r") as f:

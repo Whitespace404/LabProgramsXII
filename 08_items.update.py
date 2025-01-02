@@ -45,7 +45,25 @@ def update():
         pickle.dump(d, file)
 
 
-create()
-read()
-update()
-read()
+def menu_driver():
+    choice = 0
+    while choice != 4:
+        print(
+            """
+1: Create a new text file
+2: Read text file
+3: Update text file
+4: Exit
+    """
+        )
+        choice = int(input("> "))
+
+        if choice == 1:
+            create()
+        elif choice == 2:
+            read()
+        elif choice == 3:
+            update()
+
+
+menu_driver()
