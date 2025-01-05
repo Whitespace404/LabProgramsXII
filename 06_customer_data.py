@@ -17,12 +17,12 @@ def input_dictionary():
 
 
 def create():
-    with open("06.dat", "wb") as file:
+    with open("07.dat", "wb") as file:
         pickle.dump(input_dictionary(), file)
 
 
 def read():
-    with open("06.dat", "rb") as file:
+    with open("07.dat", "rb") as file:
         d = pickle.load(file)
         print(d)
 

@@ -11,7 +11,7 @@ def stack_pop(stack):
 
 stack = []
 for name, cost in D.items():
-    if cost < 100:
+    if cost > 100:
         stack_push(stack, cost)
 
 stack_pop(stack)

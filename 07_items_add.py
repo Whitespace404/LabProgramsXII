@@ -27,5 +27,22 @@ def read():
         print(d)
 
 
-create()
-read()
+def menu_driver():
+    choice = 0
+    while choice != 3:
+        print(
+            """
+1: Create a new binary file
+2: Read file
+3: Exit
+    """
+        )
+        choice = int(input("> "))
+
+        if choice == 1:
+            create()
+        elif choice == 2:
+            read()
+
+
+menu_driver()
